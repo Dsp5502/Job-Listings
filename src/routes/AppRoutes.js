@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import CardsJobs from '../components/CardsJobs';
 import HeaderPrincipal from '../components/HeaderPrincipal';
 
@@ -8,9 +8,7 @@ export default class AppRoutes extends Component {
     return (
       <BrowserRouter>
         <HeaderPrincipal />
-        <Routes>
-          <Route path='/' element={<CardsJobs />}></Route>
-        </Routes>
+        <CardsJobs />
       </BrowserRouter>
     );
   }

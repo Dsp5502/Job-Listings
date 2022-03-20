@@ -1,8 +1,9 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const DivCard = styled.div`
-  margin: 0 auto;
+  margin: 35px auto;
   width: 1000px;
   height: 150px;
   /* border: 1px solid red; */
@@ -137,45 +138,70 @@ const TituloNew = styled.div`
   margin: 0;
 `;
 
+const url = 'https://api-prueba-productos.herokuapp.com/jobListings';
 export default class CardsJobs extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+    };
+  }
+
+  componentDidMount() {
+    this.peticionGet();
+  }
+
+  peticionGet = () => {
+    axios
+      .get(url)
+      .then((resp) => {
+        this.setState({ data: resp.data });
+      })
+      .catch((err) => console.error(err));
+  };
+
   render() {
+    console.log(this.state.data);
     return (
-      <DivCard>
-        <DivImg>
-          <div>
-            <ImgLogo
-              src='https://res.cloudinary.com/djjgtili7/image/upload/v1647716939/job-listings/photosnap_auagw8.svg'
-              alt='logo'
-            />
-          </div>
-          <DivInfo>
-            <TituloNew>
-              <Titulop>Photosnap</Titulop>
-              <Titulop1>
-                <small>NEW!</small>
-              </Titulop1>
-              <Titulop2>
-                <small>FEATURED</small>
-              </Titulop2>
-            </TituloNew>
-            <Cargop>
-              <strong>Senior Frontend Developer</strong>
-            </Cargop>
-            <DivDias>
-              <LiDias>5d ago</LiDias>
-              <LiDias>• contract</LiDias>
-              <LiDias>• USA only</LiDias>
-            </DivDias>
-          </DivInfo>
-        </DivImg>
-        <DivTags>
-          <SpanTags>Frontend</SpanTags>
-          <SpanTags>Senior</SpanTags>
-          <SpanTags>HTML</SpanTags>
-          <SpanTags>CSS</SpanTags>
-          <SpanTags>JavaScript</SpanTags>
-        </DivTags>
-      </DivCard>
+      <>
+        {this.state.data.map((data) => {
+          return (
+            <DivCard key={data.id}>
+              <DivImg>
+                <div>
+                  <ImgLogo src={data.imagen} alt={data.id} />
+                </div>
+                <DivInfo>
+                  <TituloNew>
+                    <Titulop>{data.titulo}</Titulop>
+                    <Titulop1>
+                      <small>NEW!</small>
+                    </Titulop1>
+                    <Titulop2>
+                      <small>FEATURED</small>
+                    </Titulop2>
+                  </TituloNew>
+                  <Cargop>
+                    <strong>{data.nombre}</strong>
+                  </Cargop>
+                  <DivDias>
+                    <LiDias>{data.ago}</LiDias>
+                    <LiDias>• {data.ago2}</LiDias>
+                    <LiDias>• {data.ago3}</LiDias>
+                  </DivDias>
+                </DivInfo>
+              </DivImg>
+              <DivTags>
+                <SpanTags>Frontend</SpanTags>
+                <SpanTags>Senior</SpanTags>
+                <SpanTags>HTML</SpanTags>
+                <SpanTags>CSS</SpanTags>
+                <SpanTags>JavaScript</SpanTags>
+              </DivTags>
+            </DivCard>
+          );
+        })}
+      </>
     );
   }
 }
