@@ -144,6 +144,7 @@ export default class CardsJobs extends Component {
     super();
     this.state = {
       data: [],
+      filtrada: [],
     };
   }
 
@@ -160,8 +161,14 @@ export default class CardsJobs extends Component {
       .catch((err) => console.error(err));
   };
 
+  filtar = (e) => {
+    const pFiltrada = e.target.textContent;
+    console.log(pFiltrada);
+  };
+
   render() {
-    console.log(this.state.data);
+    // console.log(this.state.data);
+
     return (
       <>
         {this.state.data.map((data) => {
@@ -175,10 +182,10 @@ export default class CardsJobs extends Component {
                   <TituloNew>
                     <Titulop>{data.titulo}</Titulop>
                     <Titulop1>
-                      <small>NEW!</small>
+                      <small>{data.new}</small>
                     </Titulop1>
                     <Titulop2>
-                      <small>FEATURED</small>
+                      <small>{data.featured}</small>
                     </Titulop2>
                   </TituloNew>
                   <Cargop>
@@ -187,16 +194,16 @@ export default class CardsJobs extends Component {
                   <DivDias>
                     <LiDias>{data.ago}</LiDias>
                     <LiDias>• {data.ago2}</LiDias>
-                    <LiDias>• {data.ago3}</LiDias>
+                    <LiDias onClick={this.filtar}>• {data.ago3}</LiDias>
                   </DivDias>
                 </DivInfo>
               </DivImg>
               <DivTags>
-                <SpanTags>Frontend</SpanTags>
-                <SpanTags>Senior</SpanTags>
-                <SpanTags>HTML</SpanTags>
-                <SpanTags>CSS</SpanTags>
-                <SpanTags>JavaScript</SpanTags>
+                <SpanTags onClick={this.filtar}>{data.tags[0]}</SpanTags>
+                <SpanTags onClick={this.filtar}>{data.tags[1]}</SpanTags>
+                <SpanTags onClick={this.filtar}>{data.tags[2]}</SpanTags>
+                <SpanTags onClick={this.filtar}>{data.tags[3]}</SpanTags>
+                <SpanTags onClick={this.filtar}>{data.tags[4]}</SpanTags>
               </DivTags>
             </DivCard>
           );
